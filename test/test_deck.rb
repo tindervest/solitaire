@@ -10,8 +10,6 @@ class DeskTest < Test::Unit::TestCase
   def setup
     @deck_cutter = Solitaire::DeckCutter.new
     @deck = Solitaire::Deck.new(@deck_cutter)
-    @values = %w{A 2 3 4 5 6 7 8 9 10 J Q K}
-    @suits  = %w{clubs diamonds hearts spades}
   end
 
   must "contain 54 cards after it is created" do
@@ -23,22 +21,6 @@ class DeskTest < Test::Unit::TestCase
     until n > 51
       assert_equal (n + 1).to_s, @deck.cards[n]
       n = n + 1
-    end
-  end
-
-  must "be able to return numerical value for jokers" do
-    result = @deck.get_numerical_value('A', 'joker')
-    assert_equal 53, result
-
-    result = @deck.get_numerical_value('B', 'joker')
-    assert_equal 53, result
-  end
-
-  must "be able to return numerical value for non joker cards" do
-    @suits.each_with_index do |suit, si|
-      @values.each_with_index do |value, vi|
-        assert_equal ((vi + 1) + (si * 13)), @deck.get_numerical_value(value,suit) 
-      end
     end
   end
 

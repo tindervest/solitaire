@@ -9,9 +9,9 @@ class TextHandlerTest < Test::Unit::TestCase
     @text_handler = Solitaire::TextHandler.new
   end
 
-  must "remove all non alpha characters from text stream" do
+  must "remove all non alpha characters from text stream and group into array of 5 character strings" do
     text = "Code in Ruby, live longer!"
-    assert_equal "CODEINRUBYLIVELONGER", @text_handler.discard_non_alphabetic(text)
+    assert_equal ["CODEI", "NRUBY", "LIVEL", "ONGER"], @text_handler.processing_input(text)
   end
 
   must "return an empty string when text stream is nil" do
