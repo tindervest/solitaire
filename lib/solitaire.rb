@@ -14,16 +14,17 @@ module Solitaire
       @deck_cutter = DeckCutter.new
       @deck = Deck.new(@deck_cutter)
     end
+    
+    def process(message)
+      text = @text_handler.processing_input(message)
+      data = get_processing_data(text.join)
 
-    def decrypt(message)
-      data = get_processing_data(message)
-      output = @crypto.decrypt(data[:message], data[:keystream])
-      @text_handler.convert_numbers_to_text(output)
-    end
+      if text.join(" ") == message
+        output = @crypto.decrypt(data[:message], data[:keystream])
+      else
+        output = @crypto.encrypt(data[:message], data[:keystream])
+      end
 
-    def encrypt(message)
-      data = get_processing_data(message)
-      output = @crypto.encrypt(data[:message], data[:keystream])
       @text_handler.convert_numbers_to_text(output)
     end
 
@@ -32,9 +33,8 @@ module Solitaire
     def get_processing_data(message)
       output, keystream = {},""
       @deck.reset
-      text = @text_handler.processing_input(message).join
-      text.length.times { keystream << @deck.get_next_value }
-      output[:message] = @text_handler.convert_text_to_numbers(text)
+      message.length.times { keystream << @deck.get_next_value }
+      output[:message] = @text_handler.convert_text_to_numbers(message)
       output[:keystream] = @text_handler.convert_text_to_numbers(keystream)
       output
     end
