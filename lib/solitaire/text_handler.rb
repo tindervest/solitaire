@@ -9,10 +9,10 @@ module Solitaire
 
     def group_text(text)
       out, current = [],[]
-      text.chars do |c| 
+      text.chars do |c|
         current << c
         if current.length == 5
-          out << current.join 
+          out << current.join
           current.clear
         end
       end
@@ -30,7 +30,7 @@ module Solitaire
     def convert_numbers_to_text(numbers)
       str = ""
       numbers.each { |n| str << (n + 64).chr }
-      group_text(str) 
+      group_text(str)
     end
 
     :private 
@@ -40,10 +40,7 @@ module Solitaire
     end
 
     def autofill_array_entries(text_array, size = 5, character = "X")
-      if text_array.length > 0
-        last_entry = text_array[text_array.length - 1]
-        (size - last_entry.length).times { last_entry << character }
-      end      
+      (size - text_array.last.length).times { text_array.last << character } unless text_array.last.nil?
       text_array
     end
   end

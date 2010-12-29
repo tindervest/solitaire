@@ -12,16 +12,18 @@ class DeckCutterTest < Test::Unit::TestCase
     52.times { |n| @deck << (n + 1).to_s }
     @deck << 'A'
     @deck << 'B'
+
+    @deck_cutter.deck = @deck
   end 
 
   must "move a card down one spot and shift other card" do
-    @deck_cutter.move_card(@deck, 'A', 1)
+    @deck_cutter.move_card('A', 1)
     assert_equal 'A', @deck[53]
     assert_equal 'B', @deck[52]
   end
 
   must "move a card beyond the end of the deck" do
-    @deck_cutter.move_card(@deck, 'A', 2)
+    @deck_cutter.move_card('A', 2)
     assert_equal '1', @deck[0]
     assert_equal 'A', @deck[1]
     assert_equal '2', @deck[2]
@@ -33,8 +35,9 @@ class DeckCutterTest < Test::Unit::TestCase
     deck << "1"; deck << "2";  deck << "B"
     49.times { |n| deck << (n + 3).to_s }
     deck << "A"; deck << "52"
-
-    @deck_cutter.triple_cut(deck)
+  
+    @deck_cutter.deck = deck
+    @deck_cutter.triple_cut
     assert_equal "52", deck[0]
     assert_equal "B", deck[1]
     49.times { |n| assert_equal (n + 3).to_s, deck[n + 2] }
@@ -50,7 +53,8 @@ class DeckCutterTest < Test::Unit::TestCase
     deck << "A"
     deck << "1"
     
-    @deck_cutter.count_cut(deck)
+    @deck_cutter.deck = deck
+    @deck_cutter.count_cut
     51.times { |n| assert_equal (n + 2).to_s, deck[n] }
     assert_equal "A", deck[51]
     assert_equal "B", deck[52]
@@ -58,7 +62,7 @@ class DeckCutterTest < Test::Unit::TestCase
   end
 
   must "arrange deck as expected when preparing next move " do
-    @deck_cutter.next(@deck)
+    @deck_cutter.next
     51.times { |n| assert_equal (n + 2).to_s, @deck[n] }
     assert_equal "A", @deck[51]
     assert_equal "B", @deck[52]

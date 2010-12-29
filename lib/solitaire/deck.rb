@@ -1,6 +1,6 @@
 module Solitaire
 
-  class Deck 
+  class Deck
 
     attr_reader :cards
 
@@ -17,9 +17,10 @@ module Solitaire
       @cards << 'A'
       @cards << 'B'
     end
-    
+
     def get_next_value
-      @cutter.next(@cards)
+      @cutter.deck = @cards
+      @cutter.next
       index = @cards[0].to_i
       number = @cards[index == 0 ? 53 : index].to_i
       number > 0 ? get_letter_value(number) : get_next_value

@@ -10,7 +10,7 @@ class SolitaireTest < Test::Unit::TestCase
     @solitaire = Solitaire::Solitaire.new
     Solitaire::Deck.any_instance.stubs(:get_next_value).returns("D", "W", "J", "X", "H", "Y", "R", "F", "D", "G")
   end
-  
+
   must "call CryptoService::encrypt when lowercase letters are included in argument" do
     message = "testx"
     Solitaire::TextHandler.any_instance.stubs(:processing_input).with(message).returns(["TESTX"])
@@ -29,7 +29,7 @@ class SolitaireTest < Test::Unit::TestCase
     Solitaire::TextHandler.any_instance.stubs(:convert_text_to_numbers).with("ASBVSYHNSX").returns([1,2,3,4,5,6,7,8,9,10])
     Solitaire::TextHandler.any_instance.stubs(:convert_text_to_numbers).with("DWJXHYRFDG").returns([10,9,8,7,6,5,4,3,2,1])
     Solitaire::TextHandler.any_instance.stubs(:convert_numbers_to_text).with([1,2,3,4,5,6,7,8,9,10]).returns(["ABCDEFGHIJ"])
-    
+
     Solitaire::CryptoService.any_instance.expects(:decrypt).with([1,2,3,4,5,6,7,8,9,10], [10,9,8,7,6,5,4,3,2,1]).returns([1,2,3,4,5,6,7,8,9,10])
 
     @solitaire.process(message)

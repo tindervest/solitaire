@@ -8,8 +8,8 @@ require 'deck'
 module Solitaire
   class Solitaire
 
-    attr_accessor :text_handler, :crypto, :deck, :deck_cutter
-    
+    attr_writer :text_handler, :crypto, :deck, :deck_cutter
+
     def process(message)
       text = text_handler.processing_input(message)
       data = get_processing_data(text.join)
@@ -40,7 +40,7 @@ module Solitaire
     end
 
     :private
-    
+
     def get_processing_data(message)
       output, keystream = {},""
       deck.reset

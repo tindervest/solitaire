@@ -38,8 +38,14 @@ class DeskTest < Test::Unit::TestCase
     assert_equal 'Z', result
   end
 
+  must "call DeckCutter::deck when getting next output" do
+    Solitaire::DeckCutter.any_instance.expects(:deck=).with(@deck.cards).returns(@deck.cards)
+    Solitaire::DeckCutter.any_instance.stubs(:next).returns(0)
+    @deck.get_next_value
+  end
+
   must "call DeckCutter::next when getting next output" do 
-    Solitaire::DeckCutter.any_instance.expects(:next).with(@deck.cards)
+    Solitaire::DeckCutter.any_instance.expects(:next)
     @deck.get_next_value
   end
   
